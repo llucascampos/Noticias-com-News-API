@@ -2,44 +2,52 @@
   <div>
 
     <v-layout justify-center mt-5>
-      <v-flex xs6>
+      <v-flex xs4>
          <v-text-field
           v-model="pesquisa"
           label="Digite Sua Pesquisa"
+          solo
+          @keyup.enter="chamada()"
           ></v-text-field>
-          <v-btn @click="chamada()">Pesquisar</v-btn>
+      </v-flex>
+    </v-layout>
+    
+    <v-layout justify-center pb-5>
+      <v-flex xs1>
+        <v-btn dark  @click="chamada()">Pesquisar</v-btn>
       </v-flex>
     </v-layout>
 
-    <div v-if="carregando" class="text-xs-center">
+    <div v-if="carregando" class="text-xs-center my-5">
       <v-progress-circular
       :size="100"
       color="primary"
       indeterminate
-      ></v-progress-circular>
+      > Carregando</v-progress-circular>
     </div>
-    
-    <v-layout row justify-center mt-5>
-      <v-flex xs10>
-        <v-card  class="card" >
-          <v-card-title><h2>Noticias</h2></v-card-title>
-          <v-divider></v-divider>
-          <div>
-            <div v-for="noticia in dadosNoticias" :key="noticia.title">
-              {{noticia.title}}
-              <img :src="noticia.urlToImage" style="width: 100%">
-              {{noticia.description}}
-            </div>
 
-          </div>
-         
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <div v-if="dadosNoticias !=null">
+      <v-layout row justify-center mt-5>
+        <v-flex xs9>
+          <v-card  class="card" style="height: 500px" >
+            <v-card-title><h2>Noticias</h2></v-card-title>
+            <v-divider></v-divider>
+            <div>
+              <div v-for="noticia in dadosNoticias" :key="noticia.title">
+                {{noticia.title}}
+                <img :src="noticia.urlToImage" style="width: 100%">
+                {{noticia.description}}
+              </div>
+            </div>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </div>
   </div>
 </template>
 
 <script>
+import colors from 'vuetify/es5/util/colors'
 import axios from 'axios'
 
 export default {
