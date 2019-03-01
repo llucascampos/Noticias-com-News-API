@@ -10,6 +10,15 @@
           <v-btn @click="chamada()">Pesquisar</v-btn>
       </v-flex>
     </v-layout>
+
+    <div v-if="carregando" class="text-xs-center">
+      <v-progress-circular
+      :size="100"
+      color="primary"
+      indeterminate
+      ></v-progress-circular>
+    </div>
+    
     <v-layout row justify-center mt-5>
       <v-flex xs10>
         <v-card  class="card" >
@@ -39,18 +48,21 @@ export default {
     return{
       pesquisa: null,
       dadosNoticias: null,
+      carregando: false,
 
     } 
   },
 
   methods:{
     chamada(){
+      this.carregando = true
       let url = `https://newsapi.org/v2/everything?q=${this.pesquisa}&apiKey=9a393de8a41246ffb3b265bf40820eee&language=pt`
        axios.get(url,
          { headers: { Authorization: '9a393de8a41246ffb3b265bf40820eee' } }
        )
        .then(Response => (
-         this.dadosNoticias = Response.data.articles
+         this.dadosNoticias = Response.data.articles,
+         this.carregando = false
        )) 
 
     }
@@ -67,6 +79,10 @@ export default {
   height: 300px;
   overflow-x: hidden;
   overflow-y: scroll;
+}
+
+.v-progess-circular{
+  margin: 1rem
 }
 
 </style>
