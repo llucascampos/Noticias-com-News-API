@@ -29,14 +29,14 @@
     <div v-if="dadosNoticias !=null">
       <v-layout row justify-center mt-5>
         <v-flex xs9>
-          <v-card  class="card" style="height: 500px" >
-            <v-card-title><h2>Noticias</h2></v-card-title>
+          <v-card>
+            <v-card-title class="py-4"><h2>Noticias sobre: {{termoPesquisado}}</h2></v-card-title>
             <v-divider></v-divider>
-            <div>
-              <div v-for="noticia in dadosNoticias" :key="noticia.title">
-                {{noticia.title}}
-                <img :src="noticia.urlToImage" style="width: 100%">
-                {{noticia.description}}
+            <div class="card">
+              <div v-for="noticia in dadosNoticias" :key="noticia.title" class="noticias">
+                <h1>{{noticia.title}}</h1>
+                <a href=""> <img :src="noticia.urlToImage"></a>
+                <p>{{noticia.description}}</p>
               </div>
             </div>
           </v-card>
@@ -57,6 +57,7 @@ export default {
       pesquisa: null,
       dadosNoticias: null,
       carregando: false,
+      termoPesquisado: null
 
     } 
   },
@@ -70,7 +71,8 @@ export default {
        )
        .then(Response => (
          this.dadosNoticias = Response.data.articles,
-         this.carregando = false
+         this.carregando = false,
+         this.termoPesquisado = this.pesquisa
        )) 
 
     }
@@ -84,13 +86,30 @@ export default {
 <style>
 
 .card{
-  height: 300px;
+  height: 600px;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding: 50px;
 }
 
 .v-progess-circular{
-  margin: 1rem
+  margin: 1rem;
+}
+
+.noticias{
+  text-align: center;
+  padding: 50px;
+  border: 1px black solid;
+  border-radius: 10px;
+  margin-top: 50px;
+}
+.noticias img{
+  width: 100%;
+  padding: 20px 0px;
+}
+
+.noticias p{
+  font-size: 20px;
 }
 
 </style>
