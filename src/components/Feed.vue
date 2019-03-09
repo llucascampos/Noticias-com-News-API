@@ -35,8 +35,9 @@
             <div class="card">
               <div v-for="noticia in dadosNoticias" :key="noticia.title" class="noticias">
                 <h1>{{noticia.title}}</h1>
-                <a href=""> <img :src="noticia.urlToImage"></a>
+                <a :href="noticia.urlToImage" target="_blank"> <img :src="noticia.urlToImage"></a>
                 <p>{{noticia.description}}</p>
+                <a :href="noticia.url" target="_blank">Leia mais</a>
               </div>
             </div>
           </v-card>
