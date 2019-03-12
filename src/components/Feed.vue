@@ -26,6 +26,24 @@
       > Carregando</v-progress-circular>
     </div>
 
+    <v-layout justify-center>
+      <v-flex xs3 pr-5>
+        <v-text-field
+        label="De:"
+        v-model="from"
+      >
+      </v-text-field>
+      </v-flex>
+
+      <v-flex xs3 pl-5>
+        <v-text-field
+        label="Até:"
+        v-model="to"
+        >
+        </v-text-field>
+      </v-flex>
+    </v-layout>
+
     <div v-if="dadosNoticias !=null">
       <v-layout row justify-center mt-5>
         <v-flex xs9>
@@ -45,6 +63,7 @@
       </v-layout>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -58,7 +77,9 @@ export default {
       pesquisa: null,
       dadosNoticias: null,
       carregando: false,
-      termoPesquisado: null
+      termoPesquisado: null,
+      from: '',
+      to: '',
 
     } 
   },
@@ -66,10 +87,10 @@ export default {
   methods:{
     chamada(){
       this.carregando = true
-      let url = `https://newsapi.org/v2/everything?q=${this.pesquisa}&apiKey=9a393de8a41246ffb3b265bf40820eee&language=pt`
-       axios.get(url,
-         { headers: { Authorization: '9a393de8a41246ffb3b265bf40820eee' } }
-       )
+      let url = `https://newsapi.org/v2/everything?q=${this.pesquisa}&from=${this.from}&to=${this.to}&apiKey=9a393de8a41246ffb3b265bf40820eee&language=pt`
+      axios.get(url,
+        { headers: { Authorization: '9a393de8a41246ffb3b265bf40820eee' } }
+      )
        .then(Response => (
          this.dadosNoticias = Response.data.articles,
          this.carregando = false,
